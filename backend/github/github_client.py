@@ -16,6 +16,11 @@ class GitHubError(Exception):
         self.retry_after_seconds = retry_after_seconds
 
 
+class GitHubInvalidURLError(GitHubError):
+    def __init__(self, message: str = "Invalid GitHub repository URL."):
+        super().__init__("INVALID_URL", message)
+
+
 class GitHubRepoNotFoundError(GitHubError):
     def __init__(self, message: str = "Repository not found or is not public."):
         super().__init__("REPO_NOT_FOUND", message)
@@ -34,6 +39,31 @@ class GitHubRateLimitedError(GitHubError):
 class GitHubUnavailableError(GitHubError):
     def __init__(self, message: str = "GitHub API is currently unavailable."):
         super().__init__("GITHUB_UNAVAILABLE", message)
+
+
+GITHUB_URL_PATTERN = re.compile(
+    r"^https?://(www\.)?github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+?)(\.git)?(/.*)?$"
+)
+
+
+def parse_github_url(url: str) -> Tuple[str, str]:
+    """Parse and validate GitHub repository URL according to PRD §8.2 FR-REPO-1.
+
+    Accepts: https://github.com/owner/repo or http://github.com/...
+    Rejects: shorthand 'owner/repo', non-github domains (SSRF guard).
+    Returns (owner, repo).
+    Raises GitHubInvalidURLError if invalid.
+    """
+    if not url or not isinstance(url, str):
+        raise GitHubInvalidURLError("GitHub repository URL is required.")
+
+    match = GITHUB_URL_PATTERN.match(url.strip())
+    if not match:
+        raise GitHubInvalidURLError("Invalid GitHub repository URL. Must be in format https://github.com/owner/repo")
+
+    owner = match.group(2)
+    repo = match.group(3)
+    return owner, repo
 
 
 @dataclass
@@ -84,6 +114,7 @@ class GitHubClient:
                     if resp.status_code == 200:
                         data = resp.json()
                         return {
+                            "github_repo_id": data.get("id"),
                             "owner": data.get("owner", {}).get("login", owner),
                             "name": data.get("name", repo),
                             "full_name": data.get("full_name", f"{owner}/{repo}"),
