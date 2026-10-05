@@ -116,8 +116,9 @@ Gitissue/
 
 ## 4. Test Suite Execution
 
-All 14 automated unit tests pass locally:
+All 17 automated unit tests pass locally:
 - `backend/tests/test_preprocessing.py`: 6 tests passing (Markdown, HTML, code fences, stack traces, URLs, mentions, protected terms preservation, stopwords).
 - `backend/tests/test_model.py`: 4 tests passing (Insufficient data validation, min doc length filtering, protected term preservation in extreme filtering, corpus statistics shape).
 - `backend/tests/test_pipeline.py`: 2 tests passing (End-to-end pipeline invariants, row sum normalization, auto-labels, prevalence, manual K mode).
 - `backend/tests/test_gibbs.py`: 2 tests passing (Gibbs sampler convergence, distribution sum invariants, Hungarian topic matching).
+- `backend/tests/test_github_client.py`: 3 tests passing (Cursor pagination, PR filtering, rate limit retry and backoff).

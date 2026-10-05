@@ -21,6 +21,17 @@ class Settings(BaseSettings):
     MAX_ANALYSES_PER_USER_PER_HOUR: int = 10
     LOG_LEVEL: str = "INFO"
 
+    # Sentry Configuration
+    SENTRY_DSN: Optional[str] = None
+    SENTRY_ENVIRONMENT: str = "development"
+
+    @property
+    def allowed_origins_list(self) -> list[str]:
+        """Parse comma-separated ALLOWED_ORIGINS into list of trimmed strings."""
+        if not self.ALLOWED_ORIGINS:
+            return []
+        return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",") if origin.strip()]
+
     # ML Pipeline fixed configuration defaults
     DEFAULT_SEED: int = 42
     DEFAULT_MIN_DOC_LENGTH: int = 8
