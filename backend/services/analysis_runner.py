@@ -325,7 +325,7 @@ def run_analysis_job(
         # 4a. Create Topic records
         created_topics: Dict[int, Topic] = {}
         for topic_dict in pipeline_result.topics:
-            t_idx = topic_dict["index"]
+            t_idx = topic_dict.get("topic_index", topic_dict.get("index"))
             new_topic = Topic(
                 analysis_id=analysis_id,
                 topic_index=t_idx,
@@ -341,7 +341,7 @@ def run_analysis_job(
 
         # 4b. Create TopicWord records
         for topic_dict in pipeline_result.topics:
-            t_idx = topic_dict["index"]
+            t_idx = topic_dict.get("topic_index", topic_dict.get("index"))
             topic_record = created_topics[t_idx]
             for word_item in topic_dict["top_words"]:
                 word_record = TopicWord(
