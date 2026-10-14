@@ -136,7 +136,7 @@ def upgrade() -> None:
     sa.UniqueConstraint('topic_id', 'rank', name='uq_topic_words_topic_rank')
     )
 
-    # Enable Row Level Security (RLS) on all tables for Supabase PostgreSQL (PRD §10, D-21)
+    # Enable Row Level Security (RLS) on all tables for PostgreSQL (PRD §10, D-21)
     bind = op.get_bind()
     if bind.dialect.name == "postgresql":
         op.execute("ALTER TABLE users ENABLE ROW LEVEL SECURITY;")
