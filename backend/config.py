@@ -11,11 +11,15 @@ class Settings(BaseSettings):
         extra="ignore"
     )
 
+    # Database configuration (Neon PostgreSQL in production, SQLite in local dev)
+    DATABASE_URL: Optional[str] = None
+    NEON_DATABASE_URL: Optional[str] = None
     SUPABASE_DATABASE_URL: Optional[str] = None
+
     GITHUB_TOKEN: Optional[str] = None
     CLERK_JWKS_URL: Optional[str] = None
     CLERK_ISSUER: Optional[str] = None
-    ALLOWED_ORIGINS: str = "http://localhost:5173,https://gitissue.vercel.app"
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173,https://gitissue.vercel.app"
     MAX_ISSUES_CAP: int = 1000
     MAX_CONCURRENT_ANALYSES: int = 2
     MAX_ANALYSES_PER_USER_PER_HOUR: int = 10
