@@ -1,5 +1,7 @@
-"""Pytest fixtures and configuration for GitIssue backend test suite."""
 import os
+# Ensure test suite runs isolated in-memory without external database calls
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+
 import uuid
 import pytest
 from fastapi.testclient import TestClient

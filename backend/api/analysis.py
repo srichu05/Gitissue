@@ -472,7 +472,7 @@ def export_analysis(
                 md_lines.append(f"- **Top Words:** {top_words_str}")
                 md_lines.append("- **Representative Issues:**")
                 for r_issue in t_item["representative_issues"]:
-                    md_lines.append(f"  - [#{r_issue['number']}]({r_issue['url']}) {r_issue['title']} (P={r_issue['probability']:.2f})")
+                    md_lines.append(f"  - [#{r_issue['number']}]({r_issue['url']}) {r_issue['title']} (P={r_issue['probability'] * 100:.1f}%)")
                 md_lines.append("")
 
             return Response(
