@@ -161,9 +161,9 @@ export const api = {
     apiFetch<void>(`/api/analyses/${id}`, { method: "DELETE" }),
 
   // Topics (PRD §11.4, §11.5, §11.6)
-  getTopics: (analysisId: string) =>
-    apiFetch<{ topics: Topic[] }>(`/api/analyses/${analysisId}/topics`).then(
-      (res) => res.topics
+  getTopics: (analysisId: string): Promise<Topic[]> =>
+    apiFetch<{ topics: Topic[] } | Topic[]>(`/api/analyses/${analysisId}/topics`).then(
+      (res): Topic[] => (Array.isArray(res) ? res : (res as any)?.topics || [])
     ),
 
   getTopic: (analysisId: string, topicId: string) =>
