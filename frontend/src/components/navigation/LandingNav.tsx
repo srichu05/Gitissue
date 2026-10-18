@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom"
-import { BarChart3 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -10,11 +9,11 @@ export function LandingNav() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <BarChart3 className="size-5" />
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white text-zinc-950 font-extrabold text-sm tracking-tight shadow-sm">
+            GI
           </div>
-          <span className="text-lg font-semibold tracking-tight">GitIssue</span>
+          <span className="text-lg font-bold tracking-tight">GitIssue</span>
         </Link>
 
         <div className="hidden items-center gap-6 md:flex">
