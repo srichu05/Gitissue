@@ -160,7 +160,7 @@ export function CorpusStatsPage() {
                   <span className="font-semibold text-foreground uppercase tracking-wider text-[10px]">
                     1. Raw GitHub Issue Body (#{currentSample.issue_number})
                   </span>
-                  <p className="font-mono text-muted-foreground whitespace-pre-wrap max-h-24 overflow-y-auto">
+                  <p className="text-muted-foreground whitespace-pre-wrap max-h-24 overflow-y-auto text-xs font-normal">
                     {currentSample.raw || "No raw text available"}
                   </p>
                 </div>
@@ -170,7 +170,7 @@ export function CorpusStatsPage() {
                   <span className="font-semibold text-foreground uppercase tracking-wider text-[10px]">
                     2. Cleaned (Markdown, HTML & Code Blocks Stripped)
                   </span>
-                  <p className="font-mono text-muted-foreground max-h-20 overflow-y-auto">
+                  <p className="text-muted-foreground max-h-20 overflow-y-auto text-xs font-normal">
                     {currentSample.cleaned || "No cleaned text available"}
                   </p>
                 </div>
@@ -185,7 +185,7 @@ export function CorpusStatsPage() {
                       {currentSample.lemmatized?.map((token, i) => (
                         <span
                           key={i}
-                          className="rounded bg-background px-1.5 py-0.5 font-mono text-[11px] border"
+                          className="rounded-md bg-secondary/60 px-2 py-0.5 text-[11px] font-medium border border-border/40"
                         >
                           {token}
                         </span>
@@ -205,7 +205,7 @@ export function CorpusStatsPage() {
                         return (
                           <span
                             key={i}
-                            className="rounded bg-primary/10 text-primary px-1.5 py-0.5 font-mono text-[11px]"
+                            className="rounded-md bg-primary/10 text-primary px-2 py-0.5 text-[11px] font-medium"
                           >
                             {term}: {count}
                           </span>
@@ -243,7 +243,7 @@ export function CorpusStatsPage() {
                       <th className="py-1.5 pl-2 font-medium text-right">Total</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y font-mono">
+                  <tbody className="divide-y tabular-nums">
                     {topTerms.slice(0, 25).map((t) => (
                       <tr key={t.term}>
                         <td className="py-1.5 pr-2 font-semibold text-foreground">{t.term}</td>
@@ -277,7 +277,7 @@ export function CorpusStatsPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs text-center border font-mono">
+              <table className="w-full text-xs text-center border tabular-nums">
                 <thead className="bg-muted/50 border-b">
                   <tr>
                     <th className="py-2 px-3 text-left font-sans">Issue #</th>

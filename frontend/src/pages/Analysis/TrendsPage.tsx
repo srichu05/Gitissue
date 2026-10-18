@@ -94,7 +94,7 @@ export function TrendsPage() {
               </CardDescription>
             </div>
             {isSufficient && (
-              <span className="text-xs font-mono text-muted-foreground">
+              <span className="text-xs font-medium text-muted-foreground">
                 {series.length} months analyzed
               </span>
             )}

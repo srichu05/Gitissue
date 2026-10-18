@@ -147,7 +147,7 @@ export function ExportsPage() {
                       <CardTitle className="text-sm font-semibold leading-snug">
                         {opt.title}
                       </CardTitle>
-                      <span className="font-mono text-[11px] text-muted-foreground">
+                      <span className="text-[11px] text-muted-foreground font-medium">
                         {opt.filename}
                       </span>
                     </div>
