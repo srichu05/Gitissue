@@ -133,7 +133,7 @@ export function EvaluationPage() {
             <CardDescription className="text-xs font-medium">Active Model Topic Count</CardDescription>
             <CardTitle className="text-xl flex items-center gap-2">
               K = {selectedK}
-              <Badge variant="outline" className="text-[11px] font-mono">
+              <Badge variant="outline" className="text-[11px] font-medium">
                 Active
               </Badge>
             </CardTitle>
@@ -146,7 +146,7 @@ export function EvaluationPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription className="text-xs font-medium">Active Model Coherence</CardDescription>
-            <CardTitle className="text-xl text-primary font-mono">
+            <CardTitle className="text-xl text-primary font-semibold tabular-nums">
               {selectedItem ? selectedItem.coherence_cv.toFixed(4) : "-"}
             </CardTitle>
           </CardHeader>
@@ -292,7 +292,7 @@ export function EvaluationPage() {
                     <th className="py-2 pl-4 font-medium text-right">Model Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y font-mono">
+                <tbody className="divide-y tabular-nums font-normal">
                   {results.map((r) => {
                     const isCurrent = r.k === selectedK
                     const isSweepBest = r.k === bestK

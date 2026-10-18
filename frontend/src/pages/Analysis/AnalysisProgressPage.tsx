@@ -109,7 +109,7 @@ export function AnalysisProgressPage() {
           <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
             <Github className="size-4" />
             <span className="font-medium text-foreground">{repoName}</span>
-            <Badge variant="secondary" className="font-mono text-[11px]">
+            <Badge variant="secondary" className="text-[11px] font-medium tracking-wide">
               ID: {analysisId.slice(0, 8)}
             </Badge>
           </div>

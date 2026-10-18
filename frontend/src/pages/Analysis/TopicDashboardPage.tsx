@@ -160,7 +160,7 @@ export function TopicDashboardPage() {
               Latent topic clusters ordered by prevalence share (highest to lowest)
             </p>
           </div>
-          <span className="text-xs font-mono text-muted-foreground">
+          <span className="text-xs font-medium text-muted-foreground">
             {topicList.length} topics discovered
           </span>
         </div>
