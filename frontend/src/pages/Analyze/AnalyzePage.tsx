@@ -241,7 +241,7 @@ export function AnalyzePage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3 pt-2">
               <div className="flex items-center justify-between">
                 <Label className="text-xs">Selected Number of Topics</Label>
-                <Badge variant="secondary" className="font-mono">K = {kValue}</Badge>
+                <Badge variant="secondary" className="font-semibold tabular-nums">K = {kValue}</Badge>
               </div>
               <Slider
                 value={[kValue]}

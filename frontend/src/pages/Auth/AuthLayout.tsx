@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import { BarChart3 } from "lucide-react"
 import { Github } from "@/components/ui/github-icon"
 import { motion } from "framer-motion"
 
@@ -18,11 +17,11 @@ export function AuthLayout({ title, subtitle, children, footerText, footerLink, 
       {/* Left — form */}
       <div className="flex flex-col items-center justify-center px-4 py-12">
         <div className="w-full max-w-sm">
-          <Link to="/" className="mb-8 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <BarChart3 className="size-5" />
+          <Link to="/" className="mb-8 flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white text-zinc-950 font-extrabold text-sm tracking-tight shadow-sm">
+              GI
             </div>
-            <span className="text-lg font-semibold tracking-tight">GitIssue</span>
+            <span className="text-lg font-bold tracking-tight">GitIssue</span>
           </Link>
 
           <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
@@ -62,8 +61,8 @@ export function AuthLayout({ title, subtitle, children, footerText, footerLink, 
               <div className="mt-3 space-y-1.5">
                 {["performance / render / fiber", "hook / state / effect", "typescript / type / interface"].map((w, i) => (
                   <div key={i} className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-muted-foreground">{w}</span>
-                    <span className="text-xs font-medium text-primary">{[24, 21, 18][i]}%</span>
+                    <span className="text-xs text-muted-foreground tracking-wide">{w}</span>
+                    <span className="text-xs font-semibold tabular-nums text-primary">{[24, 21, 18][i]}%</span>
                   </div>
                 ))}
               </div>
@@ -75,7 +74,7 @@ export function AuthLayout({ title, subtitle, children, footerText, footerLink, 
               className="absolute -right-20 top-12 rounded-lg border bg-card p-3 shadow-md"
             >
               <p className="text-xs font-medium text-muted-foreground">Topic #4</p>
-              <p className="font-mono text-xs">server / component / client</p>
+              <p className="text-xs tracking-wide">server / component / client</p>
             </motion.div>
 
             <motion.div
@@ -84,7 +83,7 @@ export function AuthLayout({ title, subtitle, children, footerText, footerLink, 
               className="absolute -left-16 bottom-0 rounded-lg border bg-card p-3 shadow-md"
             >
               <p className="text-xs font-medium text-muted-foreground">Topic #5</p>
-              <p className="font-mono text-xs">test / devtool / debug</p>
+              <p className="text-xs tracking-wide">test / devtool / debug</p>
             </motion.div>
           </div>
 
