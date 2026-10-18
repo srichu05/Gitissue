@@ -86,7 +86,7 @@ export function IssueDetailPage() {
           </Button>
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-sm text-muted-foreground">#{issue.number}</span>
+              <span className="text-sm text-muted-foreground font-medium tabular-nums">#{issue.number}</span>
               <h1 className="text-xl font-bold tracking-tight sm:text-2xl">{issue.title}</h1>
               <Badge variant="outline" className="uppercase text-[10px]">
                 {issue.state || "open"}
@@ -183,7 +183,7 @@ export function IssueDetailPage() {
                       </span>
                       <span>{item.auto_label}</span>
                     </Link>
-                    <span className="font-mono font-medium">
+                    <span className="font-semibold tabular-nums">
                       {(item.probability * 100).toFixed(1)}%
                     </span>
                   </div>

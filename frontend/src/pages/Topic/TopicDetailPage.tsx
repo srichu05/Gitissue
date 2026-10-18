@@ -135,7 +135,7 @@ export function TopicDetailPage() {
                 {isHumanLabeled ? "Human Labeled" : "Auto Labeled"}
               </Badge>
             </div>
-            <p className="text-xs text-muted-foreground mt-1 font-mono">
+            <p className="text-xs text-muted-foreground mt-1 font-medium">
               Auto: {topic.auto_label}
             </p>
           </div>
@@ -270,7 +270,7 @@ export function TopicDetailPage() {
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs text-muted-foreground">
+                        <span className="text-xs text-muted-foreground font-medium tabular-nums">
                           #{issue.number}
                         </span>
                         <Link
