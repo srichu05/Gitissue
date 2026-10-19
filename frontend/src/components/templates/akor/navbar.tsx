@@ -5,6 +5,7 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Wordmark } from './primitives';
+import { useAppAuth } from '@/components/auth/AuthProvider';
 
 export const NAV_LINKS = [
   { label: 'Services', href: '#services' },
@@ -19,6 +20,15 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const navigate = useNavigate();
+  const { isSignedIn, isLoaded } = useAppAuth();
+
+  const handleLaunchWorkspace = () => {
+    if (isLoaded && !isSignedIn) {
+      navigate('/sign-in?redirect_url=/app/analyze');
+    } else {
+      navigate('/app/analyze');
+    }
+  };
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -58,16 +68,16 @@ export const Navbar = () => {
         <div className="hidden items-center gap-4 md:flex">
           <button
             type="button"
-            onClick={() => navigate('/sign-in')}
+            onClick={() => (isSignedIn ? navigate('/app') : navigate('/sign-in'))}
             className="text-xs tracking-widest text-muted-foreground uppercase transition-colors hover:text-foreground active:scale-[0.97]"
           >
-            Sign In
+            {isLoaded && isSignedIn ? 'Dashboard' : 'Sign In'}
           </button>
           <Button
             type="button"
             variant="secondary"
             size="lg"
-            onClick={() => navigate('/app/analyze')}
+            onClick={handleLaunchWorkspace}
             className={cn(
               QUOTE_BUTTON,
               'inline-flex items-center gap-1.5 border border-border/40 hover:border-border'
@@ -107,11 +117,15 @@ export const Navbar = () => {
               type="button"
               onClick={() => {
                 setIsOpen(false);
-                navigate('/sign-in');
+                if (isSignedIn) {
+                  navigate('/app');
+                } else {
+                  navigate('/sign-in');
+                }
               }}
               className="px-4 py-2 text-left text-xs tracking-widest text-muted-foreground uppercase transition-colors hover:text-foreground"
             >
-              Sign In
+              {isLoaded && isSignedIn ? 'Dashboard' : 'Sign In'}
             </button>
             <Button
               type="button"
@@ -119,7 +133,7 @@ export const Navbar = () => {
               size="lg"
               onClick={() => {
                 setIsOpen(false);
-                navigate('/app/analyze');
+                handleLaunchWorkspace();
               }}
               className={cn(QUOTE_BUTTON, 'w-full justify-center')}
             >

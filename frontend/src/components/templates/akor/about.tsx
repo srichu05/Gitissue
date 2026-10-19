@@ -3,12 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Cpu } from 'lucide-react';
 
 import { CtaButton, SectionLabel } from './primitives';
+import { useAppAuth } from '@/components/auth/AuthProvider';
 
 const ABOUT_VIDEO = 'https://hirael.com/media/templates/akor/about.mp4';
 
 export const About = () => {
   const [hasVideoFailed, setHasVideoFailed] = React.useState(false);
   const navigate = useNavigate();
+  const { isSignedIn, isLoaded } = useAppAuth();
+
+  const handleStartAnalysis = () => {
+    if (isLoaded && !isSignedIn) {
+      navigate('/sign-in?redirect_url=/app/analyze');
+    } else {
+      navigate('/app/analyze');
+    }
+  };
 
   return (
     <section id="about" data-slot="about" className="bg-[var(--akor-ink)] px-8 pt-12 pb-24 lg:px-16 lg:pt-16 lg:pb-32">
@@ -74,7 +84,7 @@ export const About = () => {
               GitIssue designs and executes issue intelligence systems that learn. We pair GitHub data extraction with unsupervised topic models trained on real issue corpora, so maintainers diagnose structural bottlenecks before they compound into blocker incidents. In accordance with PRD data hygiene invariants, raw issue bodies are excluded from database persistence.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <CtaButton onClick={() => navigate('/app/analyze')} className="flex items-center gap-2">
+              <CtaButton onClick={handleStartAnalysis} className="flex items-center gap-2">
                 Start Free Analysis <ArrowRight className="size-4" />
               </CtaButton>
               <span className="text-xs text-muted-foreground/60 tracking-wider uppercase font-medium">

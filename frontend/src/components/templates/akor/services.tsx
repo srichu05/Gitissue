@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 import { CtaButton, SectionLabel } from './primitives';
+import { useAppAuth } from '@/components/auth/AuthProvider';
 
 const SERVICES = [
   {
@@ -35,6 +36,15 @@ const ROWS = [SERVICES.slice(0, 2), SERVICES.slice(2)];
 
 export const Services = () => {
   const navigate = useNavigate();
+  const { isSignedIn, isLoaded } = useAppAuth();
+
+  const handleLaunchWorkspace = () => {
+    if (isLoaded && !isSignedIn) {
+      navigate('/sign-in?redirect_url=/app/analyze');
+    } else {
+      navigate('/app/analyze');
+    }
+  };
 
   return (
     <section id="services" data-slot="services" className="bg-foreground px-8 py-24 text-background lg:px-16 lg:py-32">
@@ -52,7 +62,7 @@ export const Services = () => {
           </p>
           <div className="mt-10">
             <CtaButton
-              onClick={() => navigate('/app/analyze')}
+              onClick={handleLaunchWorkspace}
               className="bg-background text-foreground hover:bg-background/90 inline-flex items-center gap-2"
             >
               Launch Workspace <ArrowRight className="size-4" />

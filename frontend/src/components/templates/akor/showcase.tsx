@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Activity, ArrowRight, Layers, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SectionLabel, CtaButton } from './primitives';
+import { useAppAuth } from '@/components/auth/AuthProvider';
 
 interface DemoTopic {
   id: number;
@@ -108,6 +109,15 @@ const DEMO_TOPICS: DemoTopic[] = [
 export const Showcase = () => {
   const [selectedTopic, setSelectedTopic] = React.useState<DemoTopic>(DEMO_TOPICS[0]);
   const navigate = useNavigate();
+  const { isSignedIn, isLoaded } = useAppAuth();
+
+  const handleAnalyze = () => {
+    if (isLoaded && !isSignedIn) {
+      navigate('/sign-in?redirect_url=/app/analyze');
+    } else {
+      navigate('/app/analyze');
+    }
+  };
 
   const maxWeight = Math.max(...selectedTopic.words.map((w) => w.weight));
 
@@ -240,7 +250,7 @@ export const Showcase = () => {
             <span className="text-xs text-muted-foreground">
               Run this exact model on your own GitHub repositories in seconds.
             </span>
-            <CtaButton onClick={() => navigate('/app/analyze')} className="flex items-center gap-2">
+            <CtaButton onClick={handleAnalyze} className="flex items-center gap-2">
               Analyze Your Repo <ArrowRight className="size-4" />
             </CtaButton>
           </div>

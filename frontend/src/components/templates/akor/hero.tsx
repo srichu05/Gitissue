@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 import { CtaButton, TextLink } from './primitives';
+import { useAppAuth } from '@/components/auth/AuthProvider';
 
 const HERO_VIDEO = 'https://hirael.com/media/templates/akor/hero.mp4';
 
@@ -14,6 +15,15 @@ interface HeroProps {
 export const Hero = ({ videoSrc = HERO_VIDEO, posterSrc }: HeroProps) => {
   const [hasVideoFailed, setHasVideoFailed] = React.useState(false);
   const navigate = useNavigate();
+  const { isSignedIn, isLoaded } = useAppAuth();
+
+  const handleAnalyzeClick = () => {
+    if (isLoaded && !isSignedIn) {
+      navigate('/sign-in?redirect_url=/app/analyze');
+    } else {
+      navigate('/app/analyze');
+    }
+  };
 
   return (
     <section
@@ -54,7 +64,7 @@ export const Hero = ({ videoSrc = HERO_VIDEO, posterSrc }: HeroProps) => {
         </p>
 
         <div className="fade-up flex flex-wrap items-center gap-8 [animation-delay:0.65s]">
-          <CtaButton onClick={() => navigate('/app/analyze')} className="flex items-center gap-2">
+          <CtaButton onClick={handleAnalyzeClick} className="flex items-center gap-2">
             Analyze Repository <ArrowRight className="size-4" />
           </CtaButton>
           <TextLink href="#services">Explore Capabilities</TextLink>
