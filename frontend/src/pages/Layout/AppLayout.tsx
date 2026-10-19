@@ -101,7 +101,7 @@ export function AppLayout() {
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Left: Brand + Nav Items */}
           <div className="flex items-center gap-6 sm:gap-8">
-            <Link to="/app" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
+            <Link to="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90" title="GitIssue Home">
               <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white text-zinc-950 shrink-0 font-extrabold text-sm tracking-tight shadow-sm">
                 GI
               </div>
