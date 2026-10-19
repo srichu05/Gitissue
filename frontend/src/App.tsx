@@ -5,6 +5,7 @@ import { SignInPage } from "@/pages/Auth/SignInPage"
 import { SignUpPage } from "@/pages/Auth/SignUpPage"
 import { AppLayout } from "@/pages/Layout/AppLayout"
 import { DashboardPage } from "@/pages/Dashboard/DashboardPage"
+import { HistoryPage } from "@/pages/History/HistoryPage"
 import { AnalyzePage } from "@/pages/Analyze/AnalyzePage"
 import { AnalysisProgressPage } from "@/pages/Analysis/AnalysisProgressPage"
 import { TopicDashboardPage } from "@/pages/Analysis/TopicDashboardPage"
@@ -28,7 +29,7 @@ export function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/app" element={<AppLayout />}>
             <Route index element={<DashboardPage />} />
-            <Route path="history" element={<DashboardPage />} />
+            <Route path="history" element={<HistoryPage />} />
             <Route path="analyze" element={<AnalyzePage />} />
             <Route path="analyses/:analysisId" element={<AnalysisProgressPage />} />
             <Route path="analyses/:analysisId/topics" element={<TopicDashboardPage />} />
