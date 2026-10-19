@@ -1,14 +1,24 @@
 import { SignIn } from "@clerk/clerk-react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
+import React from "react"
 import { Mail, ArrowRight, AlertCircle } from "lucide-react"
 import { Github } from "@/components/ui/github-icon"
 import { Button } from "@/components/ui/button"
 import { AuthLayout } from "./AuthLayout"
-import { isClerkConfigured } from "@/components/auth/AuthProvider"
+import { isClerkConfigured, useAppAuth } from "@/components/auth/AuthProvider"
 
 export function SignInPage() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const redirectUrl = searchParams.get("redirect_url") || "/app"
   const hasClerk = isClerkConfigured()
+  const { isLoaded, isSignedIn } = useAppAuth()
+
+  React.useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      navigate(redirectUrl, { replace: true })
+    }
+  }, [isLoaded, isSignedIn, navigate, redirectUrl])
 
   if (hasClerk) {
     return (
@@ -17,7 +27,7 @@ export function SignInPage() {
           routing="path"
           path="/sign-in"
           signUpUrl="/sign-up"
-          fallbackRedirectUrl="/app"
+          fallbackRedirectUrl={redirectUrl}
         />
       </div>
     )

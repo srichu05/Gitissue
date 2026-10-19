@@ -15,6 +15,8 @@ const API_BASE =
   import.meta.env.VITE_API_URL ||
   "http://localhost:8000"
 
+import { isClerkConfigured } from "@/components/auth/AuthProvider"
+
 export async function getAuthToken(): Promise<string | null> {
   // 1. Check if Clerk is loaded on window
   try {
@@ -27,7 +29,12 @@ export async function getAuthToken(): Promise<string | null> {
     console.warn("Failed to retrieve Clerk token:", err)
   }
 
-  // 2. In dev/testing when Clerk JWKS is unconfigured, provide stub token
+  // When Clerk is active, never use a mock dev token — enforce strict authentic user session
+  if (isClerkConfigured()) {
+    return null
+  }
+
+  // 2. Only in offline dev mode when Clerk is unconfigured
   return "test_token_dev_user"
 }
 
