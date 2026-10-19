@@ -14,6 +14,7 @@ import { TrendsPage } from "@/pages/Analysis/TrendsPage"
 import { EvaluationPage } from "@/pages/Analysis/EvaluationPage"
 import { CorpusStatsPage } from "@/pages/Analysis/CorpusStatsPage"
 import { ExportsPage } from "@/pages/Analysis/ExportsPage"
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute"
 
 export function App() {
   return (
@@ -23,18 +24,21 @@ export function App() {
         <Route path="/sign-in/*" element={<SignInPage />} />
         <Route path="/sign-up/*" element={<SignUpPage />} />
 
-        <Route path="/app" element={<AppLayout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="history" element={<DashboardPage />} />
-          <Route path="analyze" element={<AnalyzePage />} />
-          <Route path="analyses/:analysisId" element={<AnalysisProgressPage />} />
-          <Route path="analyses/:analysisId/topics" element={<TopicDashboardPage />} />
-          <Route path="analyses/:analysisId/topics/:topicIndex" element={<TopicDetailPage />} />
-          <Route path="analyses/:analysisId/issues/:issueId" element={<IssueDetailPage />} />
-          <Route path="analyses/:analysisId/trends" element={<TrendsPage />} />
-          <Route path="analyses/:analysisId/evaluation" element={<EvaluationPage />} />
-          <Route path="analyses/:analysisId/corpus" element={<CorpusStatsPage />} />
-          <Route path="analyses/:analysisId/exports" element={<ExportsPage />} />
+        {/* Strict authentication guard on all workspace routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/app" element={<AppLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="history" element={<DashboardPage />} />
+            <Route path="analyze" element={<AnalyzePage />} />
+            <Route path="analyses/:analysisId" element={<AnalysisProgressPage />} />
+            <Route path="analyses/:analysisId/topics" element={<TopicDashboardPage />} />
+            <Route path="analyses/:analysisId/topics/:topicIndex" element={<TopicDetailPage />} />
+            <Route path="analyses/:analysisId/issues/:issueId" element={<IssueDetailPage />} />
+            <Route path="analyses/:analysisId/trends" element={<TrendsPage />} />
+            <Route path="analyses/:analysisId/evaluation" element={<EvaluationPage />} />
+            <Route path="analyses/:analysisId/corpus" element={<CorpusStatsPage />} />
+            <Route path="analyses/:analysisId/exports" element={<ExportsPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
