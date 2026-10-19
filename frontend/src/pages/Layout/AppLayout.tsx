@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import {
   Avatar,
   AvatarFallback,
+  AvatarImage,
 } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -19,12 +20,76 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { ModeToggle } from "@/components/mode-toggle"
+import { useAppAuth } from "@/components/auth/AuthProvider"
 
 const navItems = [
   { to: "/app", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/app/analyze", label: "Analyze Repository", icon: PlusCircle },
   { to: "/app/history", label: "Analysis History", icon: History },
 ]
+
+function UserProfileMenu() {
+  const navigate = useNavigate()
+  const { user, signOut } = useAppAuth()
+
+  const displayName = user?.fullName || user?.firstName || user?.email?.split("@")[0] || "User"
+  const email = user?.email || ""
+  const initials = user?.initials || displayName.slice(0, 2).toUpperCase() || "U"
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+    } catch (err) {
+      console.warn("Sign out error:", err)
+    }
+    navigate("/")
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className="relative h-8 w-8 rounded-full p-0 ring-1 ring-border/50 hover:ring-white/40 transition-all overflow-hidden"
+          title={displayName}
+        >
+          <Avatar className="h-8 w-8">
+            {user?.imageUrl && <AvatarImage src={user.imageUrl} alt={displayName} />}
+            <AvatarFallback className="bg-white/10 text-white text-xs font-semibold">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56 mt-1">
+        <div className="flex items-center justify-start gap-2 p-2">
+          <div className="flex flex-col space-y-0.5 leading-none overflow-hidden">
+            <p className="font-medium text-sm text-foreground truncate">{displayName}</p>
+            {email && (
+              <p className="w-[180px] truncate text-xs text-muted-foreground">
+                {email}
+              </p>
+            )}
+          </div>
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate("/app")}>
+          <LayoutDashboard className="size-4 mr-2" /> Dashboard
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/app/analyze")}>
+          <PlusCircle className="size-4 mr-2" /> New Analysis
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/app/history")}>
+          <History className="size-4 mr-2" /> Analysis History
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleSignOut}>
+          <LogOut className="size-4 mr-2 text-destructive" /> Sign Out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 export function AppLayout() {
   const navigate = useNavigate()
@@ -80,44 +145,7 @@ export function AppLayout() {
 
             <ModeToggle />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="relative h-8 w-8 rounded-full p-0 ring-1 ring-border/50 hover:ring-white/40 transition-all"
-                >
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-white/10 text-white text-xs font-semibold">
-                      U
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 mt-1">
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <div className="flex flex-col space-y-0.5 leading-none">
-                    <p className="font-medium text-sm text-foreground">User Name</p>
-                    <p className="w-[180px] truncate text-xs text-muted-foreground">
-                      user@example.com
-                    </p>
-                  </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate("/app")}>
-                  <LayoutDashboard className="size-4 mr-2" /> Dashboard
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/app/analyze")}>
-                  <PlusCircle className="size-4 mr-2" /> New Analysis
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/app/history")}>
-                  <History className="size-4 mr-2" /> Analysis History
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate("/")}>
-                  <LogOut className="size-4 mr-2 text-destructive" /> Sign Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <UserProfileMenu />
           </div>
         </div>
       </header>
